@@ -3,6 +3,9 @@ const express = require('express');
 const morgan = require('morgan');
 const { engine } = require('express-handlebars');
 const methodOverride = require('method-override');
+
+const sortMiddleware = require('./app/middlewares/sortMiddleware');
+
 const app = express();
 const port = 3000;
 
@@ -26,14 +29,14 @@ app.use(methodOverride('_method'));
 //Http logger
 app.use(morgan('combined'));
 
+app.use(sortMiddleware);
+
 // Template engine
 app.engine(
     'handlebars', 
     engine({ 
         extname: '.hbs', 
-        helpers: {
-            sum: (a, b) => a + b,
-        },
+        helpers: require('./helpers/handlebars'),
         defaultLayout: 'main' 
     }),
 );

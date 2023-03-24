@@ -4,8 +4,9 @@ const { mutipleMongooseToObject } = require('../../util/mongoose');
 class MeController {
     
     // [GET] /me//stored/courses
-    storedCourses(req, res, next) {
-        Course.find({ deletedAt: null })
+    storedCourses(req, res, next) {        
+
+        Course.find({ deletedAt: null }).sortable(req)
             .then(courses => res.render('me/storedCourses', {
                 courses: mutipleMongooseToObject(courses)
             }))

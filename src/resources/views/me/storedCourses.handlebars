@@ -7,23 +7,32 @@
             <input type="checkbox" class="custom-control-input" id="checkbox-all">
             <label class="custom-control-label" for="checkbox-all">Chọn tất cả</label>
         </div>
-        <select class="form-control form-control-sm checkbox-select-all-options" name="action" required>
+        <select class="form-control form-control-sm checkbox-select-all-options" name="action" required="required">
             <option value="">-- Chọn hành động --</option>
             <option value="delete">Xóa</option>
             <option>3</option>
             <option>4</option>
             <option>5</option>
         </select>
-        <button class="button btn btn-primary btn-sm check-all-submit-btn disabled">Thực hiện</button>
+        <button class="button btn btn-primary btn-sm check-all-submit-btn " disabled="disabled">Thực hiện</button>
     </div>
 
     <table class="table mt-4">
         <thead>
             <tr>
                 <th scope="col" colspan="2">#</th>
-                <th scope="col">Tên khóa học</th>
-                <th scope="col">Trình độ</th>
-                <th scope="col">Thời gian tạo</th>
+                <th scope="col">
+                    Tên khóa học
+                    {{{sortable 'name' _sort}}}                   
+                </th>
+                <th scope="col">
+                    Trình độ
+                    {{{sortable 'level' _sort}}}
+                </th>
+                <th scope="col">
+                    Thời gian tạo
+                    {{{sortable 'craetedAt' _sort}}}
+                </th>
                 <th></th>
             </tr>
         </thead>
@@ -128,20 +137,14 @@
             }
         })
 
-        checkAllSubmitBtn.on('submit', function(e) {
-            var isSubmitable = !$(this).hasClass('disabled');
-            if (!isSubmitable) {
-                e.preventDefault();
-            }
-        })
 
         //Re-render check all submit button
         function renderCheckAllSubmitBtn() {
             var checkedCount = $('input[name="courseIds[]"]:checked').length;
             if (checkedCount > 0) {
-                checkAllSubmitBtn.removeClass('disabled');
+                checkAllSubmitBtn.attr('disabled', false);
             } else {
-                checkAllSubmitBtn.addClass('disabled');
+                checkAllSubmitBtn.attr('disabled', true);
             }
         }
     });
